@@ -1,29 +1,19 @@
+Sequel.extension :pg_hstore
+
 module Endpoints
   class Records < Base
-    namespace "/records" do
+    namespace "/devices/:device_id/records" do
       before do
         content_type :json, charset: 'utf-8'
       end
 
-      get do
-        encode []
+      get do |device_id|
+        encode Record.filter(device_id: device_id)
       end
 
-      post do
+      post do |device_id|
         status 201
-        encode Hash.new
-      end
-
-      get "/:id" do
-        encode Hash.new
-      end
-
-      patch "/:id" do
-        encode Hash.new
-      end
-
-      delete "/:id" do
-        encode Hash.new
+        encode Record.create(device_id: device_id, data: Sequel.hstore(body_params))
       end
     end
   end

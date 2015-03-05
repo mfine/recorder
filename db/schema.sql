@@ -36,6 +36,19 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "hstore" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "hstore"; Type: COMMENT; Schema: -; Owner: -
+--
+
+
+
+--
 -- PostgreSQL database dump complete
 --
 
