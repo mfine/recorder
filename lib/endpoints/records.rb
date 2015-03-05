@@ -14,7 +14,7 @@ module Endpoints
       end
 
       get do |device_id|
-        if params[:fetch] == "true"
+        if params[:chunked] == "true"
           status 202
           headers "Transfer-Encoding" => "chunked"
           stream do |out|
