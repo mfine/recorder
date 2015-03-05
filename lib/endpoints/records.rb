@@ -29,6 +29,7 @@ module Endpoints
                 since = entry.txid
                 out << chunk(encode(entry) + "\r\n")
               end
+              out << chunk("\r\n")
               sleep 1
             end
           end
