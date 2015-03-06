@@ -14,7 +14,7 @@ module Endpoints
       end
 
       get do |device_id|
-        encode "joes"
+        encode Hash.new(abc: 123)
       end
 
       get do |device_id|
