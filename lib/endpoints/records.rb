@@ -13,6 +13,10 @@ module Endpoints
         content_type :json, charset: 'utf-8'
       end
 
+      get "viz" do
+        encode {a: 1}
+      end
+
       get do |device_id|
         if params[:chunked] == "true"
           status 202
