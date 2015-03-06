@@ -1,3 +1,5 @@
+require "base64"
+
 module Endpoints
   class Records < Base
     namespace "/devices/:device_id/records" do
@@ -14,12 +16,17 @@ module Endpoints
       get "/viz" do |device_id|
         all = {}
         Record.filter(device_id: device_id).each do |record|
-          h = record.data.to_h
-          timestamp = h['timestamp']
-          data = h['data']
-          next unless data['msg_type'] == 23
+          h = MultiJson.load(record.data)
+          timestamp = h["timestamp"]
+          data = h["data"]
+          msg_type = data["msg_type"]
+          next unless msg_type == 23
+          cpu = data["cpu"]
+          name = Base64.decode64(data["name"])
+          all[name] = [] unless all[name]
+          all[name] << {timestamp: timestamp, cpu: cpu}
         end
-        MultiJson.dump(key: 1)
+        MultiJson.dump(all.values)
       end
 
       get do |device_id|
