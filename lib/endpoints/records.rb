@@ -31,7 +31,7 @@ module Endpoints
           cpu = data["cpu"]
           name = Base64.decode64(data["name"])
           all[name] = [] unless all[name]
-          all[name] << {timestamp: Time.at(timestamp).to_datetime, cpu: cpu}
+          all[name] << {timestamp: timestamp, cpu: cpu}
         end
         MultiJson.dump(all.values)
       end
