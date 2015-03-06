@@ -14,6 +14,10 @@ module Endpoints
       end
 
       get do |device_id|
+        encode {:a => 1, :b => 2}
+      end
+
+      get do |device_id|
         if params[:chunked] == "true"
           status 202
           headers "Transfer-Encoding" => "chunked"
