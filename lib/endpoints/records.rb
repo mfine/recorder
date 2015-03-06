@@ -14,7 +14,7 @@ module Endpoints
       end
 
       get do |device_id|
-        encode {:a => 1, :b => 2}
+        encode "joes"
       end
 
       get do |device_id|
