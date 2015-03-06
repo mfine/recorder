@@ -1,5 +1,3 @@
-Sequel.extension :pg_hstore
-
 module Endpoints
   class Records < Base
     namespace "/devices/:device_id/records" do
@@ -13,8 +11,15 @@ module Endpoints
         content_type :json, charset: 'utf-8'
       end
 
-      get do |device_id|
-        encode Hash.new(abc: 123)
+      get "/viz" do |device_id|
+        all = {}
+        Record.filter(device_id: device_id).each do |record|
+          h = record.data.to_h
+          timestamp = h['timestamp']
+          data = h['data']
+          next unless data['msg_type'] == 23
+        end
+        MultiJson.dump(key: 1)
       end
 
       get do |device_id|
@@ -44,7 +49,7 @@ module Endpoints
 
       post do |device_id|
         status 201
-        encode Record.create(device_id: device_id, data: Sequel.hstore(body_params))
+        encode Record.create(device_id: device_id, data: MultiJson.encode(body_params))
       end
     end
   end
